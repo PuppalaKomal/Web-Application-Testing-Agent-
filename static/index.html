@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QA Lite — scan any site without a browser</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+
+<main>
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Point it at a site.<br>It reads the page like a QA engineer would.</h1>
+      <p class="hero-sub">
+        Fetches each page, parses the HTML, and checks titles, headings, alt text,
+        form labels, and same-origin links for problems — entirely over HTTP,
+        no browser involved.
+      </p>
+
+      <form id="scan-form" class="scan-form">
+        <input
+          id="url-input"
+          type="text"
+          name="url"
+          placeholder="example.com"
+          autocomplete="off"
+          required
+        />
+        <button type="submit" id="scan-button">Scan</button>
+      </form>
+
+      <div class="scan-options">
+        <label>
+          Max pages
+          <input type="number" id="max-pages" value="8" min="1" max="15" />
+        </label>
+        <label>
+          Crawl depth
+          <input type="number" id="max-depth" value="1" min="0" max="2" />
+        </label>
+      </div>
+
+      <p class="hero-note" id="status-note"></p>
+    </div>
+  </section>
+
+  <section id="results" class="results hidden">
+
+    <div class="stat-strip" id="stat-strip"></div>
+
+    <div class="panel">
+      <h2>Issues</h2>
+      <div class="table-scroll">
+        <table id="issues-table">
+          <thead>
+            <tr><th>Title</th><th>Severity</th><th>Layer</th><th>Page</th><th>Evidence</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="empty-note" id="issues-empty" hidden>No issues found in the pages scanned.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Checks run</h2>
+      <div class="table-scroll">
+        <table id="checks-table">
+          <thead>
+            <tr><th>Title</th><th>Type</th><th>Priority</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Pages scanned</h2>
+      <div class="table-scroll">
+        <table id="pages-table">
+          <thead>
+            <tr><th>URL</th><th>Reachable</th><th>HTTP</th><th>Duration</th><th>Images w/o alt</th><th>H1 count</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+  </section>
+
+  <footer>
+    <p>
+      Browser-free scan: no JavaScript execution, no console errors, no real network traffic captured.
+      For the full Playwright-based agent — console errors, axe-core accessibility, screenshots, video, trace capture — run it locally or in CI.
+    </p>
+  </footer>
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
